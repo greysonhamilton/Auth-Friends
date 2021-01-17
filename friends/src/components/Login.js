@@ -59,6 +59,7 @@ export const Login = (props) => {
                     onChange={handleChanges}
                      />
             </label>
+            <button>Login</button>
         </form>
     )
 };
