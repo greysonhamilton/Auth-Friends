@@ -1,18 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, createContext} from 'react';
 import {axiosWithAuth} from '../utils/axiosWithAuth';
 import FriendForm from './FriendForm';
+
+const friendsContext = createContext();
 
 export const Friends = (props) => {
 
     const [friends, setFriends] = useState([]);
-    const [friend, setFriend] = useState({});
+    // const [friend, setFriend] = useState({});
     
     const getFriends = () => {
 
         axiosWithAuth()
             .get('api/friends')
             .then((res) => {
-                addFriends(res.data);
+                setFriends(res.data);
             })
             .catch((err) => {
                 console.log(err);
@@ -33,9 +35,9 @@ export const Friends = (props) => {
             {!edit ? (
                 <div>
                     <h2>Add new friend</h2>
-                    <FriendsContext.Provider value={{addFriends}}>
+                    <friendsContext.Provider value={{setFriends}}>
                         <FriendForm />
-                    </FriendsContext.Provider>
+                    </friendsContext.Provider>
                 </div>
 
             ) : <span></span>}
